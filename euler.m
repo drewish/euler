@@ -9,29 +9,29 @@
  Find the sum of all the multiples of 3 or 5 below 1000.
  */
 void euler_p1() {
-	NSUInteger	limit = 1000,
-				ofThree = 3,
-				ofFive = 5,
-				sum = 0;
-	NSMutableSet *set = [[NSMutableSet alloc] initWithCapacity:limit / 3];
-	
-	// Find matching numbers and put them into a set so we don't get duplicates.
-	while (ofThree < limit || ofFive < limit) {
-		if (ofThree < limit) 
-			[set addObject: [NSNumber numberWithUnsignedInteger: ofThree]];
-		if (ofFive < limit)
-			[set addObject: [NSNumber numberWithUnsignedInteger: ofFive]];
-		ofThree += 3;
-		ofFive += 5;
-	}
-	// NSLog(@"%@", set);
-	
-	// Sum the numbers.
-	for (NSNumber *n in set) {
-		sum += [n intValue];
-	}
+    NSUInteger    limit = 1000,
+                ofThree = 3,
+                ofFive = 5,
+                sum = 0;
+    NSMutableSet *set = [[NSMutableSet alloc] initWithCapacity:limit / 3];
+    
+    // Find matching numbers and put them into a set so we don't get duplicates.
+    while (ofThree < limit || ofFive < limit) {
+        if (ofThree < limit) 
+            [set addObject: [NSNumber numberWithUnsignedInteger: ofThree]];
+        if (ofFive < limit)
+            [set addObject: [NSNumber numberWithUnsignedInteger: ofFive]];
+        ofThree += 3;
+        ofFive += 5;
+    }
+    // NSLog(@"%@", set);
+    
+    // Sum the numbers.
+    for (NSNumber *n in set) {
+        sum += [n intValue];
+    }
 
-	NSLog(@"%d", sum);
+    NSLog(@"%d", sum);
 }
 
 /* 
@@ -61,42 +61,42 @@ void euler_p2() {}
  What is the total of all the name scores in the file?
 */
 void euler_p22() {
-	// Load the contents of the file.
-	NSURL *url = [NSURL URLWithString:@"http://projecteuler.net/project/names.txt"];
-	NSError *error;
-	NSString *contents = [NSString stringWithContentsOfURL: url encoding: NSASCIIStringEncoding error: &error];
-	if (contents == nil) {
-		NSLog(@"Error reading file at %@\n%@", url, [error localizedFailureReason]);
-		return;
-	}
-	
-	// Convert the string into a sorted array of names.
-	NSCharacterSet *ends = [NSCharacterSet characterSetWithCharactersInString: @"\""];
-	NSArray *names = [[contents stringByTrimmingCharactersInSet: ends] componentsSeparatedByString: @"\",\""];
-	names = [names sortedArrayUsingSelector:@selector(compare:)];
-	
-	// Iterate over each name...
-	NSUInteger  lineNumber = 1,
-				sum = 0;
-	for (NSString *name in names) {
-		// ...computing the score for each name based on the sum of each 
-		// character the name's position and the array.
-		NSUInteger	score = 0,
-					len = [name length];
-		for (NSUInteger i = 0; i < len; i++) {
-			score += [name characterAtIndex: i] - '@';
-		}
-		sum += score * lineNumber;
-		lineNumber++;
-	}
-	NSLog(@"Total: %d\n", sum);
+    // Load the contents of the file.
+    NSURL *url = [NSURL URLWithString:@"http://projecteuler.net/project/names.txt"];
+    NSError *error;
+    NSString *contents = [NSString stringWithContentsOfURL: url encoding: NSASCIIStringEncoding error: &error];
+    if (contents == nil) {
+        NSLog(@"Error reading file at %@\n%@", url, [error localizedFailureReason]);
+        return;
+    }
+    
+    // Convert the string into a sorted array of names.
+    NSCharacterSet *ends = [NSCharacterSet characterSetWithCharactersInString: @"\""];
+    NSArray *names = [[contents stringByTrimmingCharactersInSet: ends] componentsSeparatedByString: @"\",\""];
+    names = [names sortedArrayUsingSelector:@selector(compare:)];
+    
+    // Iterate over each name...
+    NSUInteger  lineNumber = 1,
+                sum = 0;
+    for (NSString *name in names) {
+        // ...computing the score for each name based on the sum of each 
+        // character the name's position and the array.
+        NSUInteger    score = 0,
+                    len = [name length];
+        for (NSUInteger i = 0; i < len; i++) {
+            score += [name characterAtIndex: i] - '@';
+        }
+        sum += score * lineNumber;
+        lineNumber++;
+    }
+    NSLog(@"Total: %d\n", sum);
 }
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-	
-	euler_p22();
-	
+    
+    euler_p22();
+    
     [pool drain];
     return 0;
 }
