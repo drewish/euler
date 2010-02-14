@@ -8,7 +8,7 @@
  
  Find the sum of all the multiples of 3 or 5 below 1000.
  */
-void euler_p1() {
+void euler_p001() {
     NSUInteger    limit = 1000,
                 ofThree = 3,
                 ofFive = 5,
@@ -45,8 +45,32 @@ void euler_p1() {
 
  Find the sum of all the even-valued terms in the sequence which do not 
  exceed four million.
-*/
-void euler_p2() {}
+ */
+void euler_p002() {}
+
+/*
+ Problem 5
+ 
+ 2520 is the smallest number that can be divided by each of the numbers from 1 
+ to 10 without any remainder.
+ 
+ What is the smallest number that is evenly divisible by all of the numbers 
+ from 1 to 20?
+ */
+void euler_p005() {
+    // Lets just brute force this shit. We'll be a mildly smart by assuming
+    // that if it has to be a multiple of 20 that we can just use that as our
+    // increment.
+    unsigned long long num = 20;
+    // Don't bother things that are factors of the larger numbers.
+    while ((num % 19 != 0) || (num % 18 != 0) || (num % 17 != 0) ||
+           (num % 16 != 0) || (num % 15 != 0) || (num % 14 != 0) ||
+           (num % 13 != 0) || (num % 12 != 0) || (num % 11 != 0) || 
+           (num % 7 != 0)) {
+            num += 20;
+    }
+    NSLog(@"MATCHED: %u", num);
+}
 
 /*
  Problem 19
@@ -67,7 +91,7 @@ void euler_p2() {}
  How many Sundays fell on the first of the month during the twentieth century 
  (1 Jan 1901 to 31 Dec 2000)?
  */
-void euler_p19() {
+void euler_p019() {
     // We'll use this as an excuse to get acquainted with the calendar classes.
     NSUInteger sundays = 0;
     NSCalendar *gregorian = [[NSCalendar alloc] 
@@ -85,7 +109,7 @@ void euler_p19() {
             // ...then check if it's a Sunday.
             NSInteger weekday = [[gregorian components: NSWeekdayCalendarUnit fromDate: date] weekday];
             if (weekday == 1) {
-                NSLog(@"%@ matches", date, weekday);
+                NSLog(@"%@ matches", date);
                 sundays++;
             }
         }
@@ -114,7 +138,7 @@ void euler_p19() {
  
  What is the total of all the name scores in the file?
 */
-void euler_p22() {
+void euler_p022() {
     // Load the contents of the file.
     NSURL *url = [NSURL URLWithString:@"http://projecteuler.net/project/names.txt"];
     NSError *error;
@@ -149,7 +173,7 @@ void euler_p22() {
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
-    euler_p22();
+    euler_p005();
     
     [pool drain];
     return 0;
