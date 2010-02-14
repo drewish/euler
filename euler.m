@@ -49,6 +49,57 @@ void euler_p1() {
 void euler_p2() {}
 
 /*
+ Problem 19
+ 
+ You are given the following information, but you may prefer to do some 
+ research for yourself.
+
+ * 1 Jan 1900 was a Monday.
+ * Thirty days has September,
+   April, June and November.
+   All the rest have thirty-one,
+   Saving February alone,
+   Which has twenty-eight, rain or shine.
+   And on leap years, twenty-nine.
+ * A leap year occurs on any year evenly divisible by 4, but not on a century 
+   unless it is divisible by 400.
+ 
+ How many Sundays fell on the first of the month during the twentieth century 
+ (1 Jan 1901 to 31 Dec 2000)?
+ */
+void euler_p19() {
+    // We'll use this as an excuse to get acquainted with the calendar classes.
+    NSUInteger sundays = 0;
+    NSCalendar *gregorian = [[NSCalendar alloc] 
+                             initWithCalendarIdentifier: NSGregorianCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setDay: 1];
+    
+    // Iterate over each year and month...
+    for (NSInteger year = 1901; year <= 2000; year++) {
+        for (NSInteger month = 1; month <= 12; month++) {
+            // ...and build an NSDate for each...
+            [components setMonth: month];
+            [components setYear: year];
+            NSDate *date = [gregorian dateFromComponents:components];
+            // ...then check if it's a Sunday.
+            NSInteger weekday = [[gregorian components: NSWeekdayCalendarUnit fromDate: date] weekday];
+            if (weekday == 1) {
+                NSLog(@"%@ matches", date, weekday);
+                sundays++;
+            }
+        }
+
+    }    
+    
+    [gregorian release];
+    [components release];
+    
+    NSLog(@"Sundays: %d", sundays);
+}
+    
+
+/*
  Problem 22
 
  Using names.txt ( http://projecteuler.net/project/names.txt ), a 46K text file 
